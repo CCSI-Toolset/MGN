@@ -1,0 +1,3 @@
+# NOTICE
+
+This work was performed under the auspices of the U.S. Department of Energy by the Lawrence Livermore National Laboratory under Contract No. DE-AC52-07NA27344. The authors acknowledge financial support through the Point Source Carbon Capture Program at the U.S. Department of Energy, Office of Fossil Energy and Carbon Management. This work was conducted as part of the Carbon Capture Simulation for Industry Impact (CCSI2) project.
