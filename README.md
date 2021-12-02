@@ -33,5 +33,5 @@ bash train_mgn_config_cylinderflow_np.sh
 
 ## Release
 
-LLNL-CODE-829430
+LLNL release number: LLNL-CODE-829430
 
