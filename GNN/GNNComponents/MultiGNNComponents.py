@@ -103,7 +103,8 @@ class GraphProcessor(Module):
         num_edge_models=1,
         in_dim_node=128, in_dim_edge=128,
         hidden_dim_node=128, hidden_dim_edge=128, 
-        hidden_layers_node=2, hidden_layers_edge=2):
+        hidden_layers_node=2, hidden_layers_edge=2,
+                norm_type='LayerNorm'):
 
         '''
         Graph processor
