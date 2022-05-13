@@ -89,7 +89,7 @@ def build_graph_processor_block(
         hidden_layers_node=2, hidden_layers_edge=2,
         norm_type='LayerNorm'):
 
-    edge_models = [EdgeProcessor(in_dim_node, in_dim_edge, hidden_dim_edge, hidden_layers_edge, norm_type) for _ in range(num_edge_models)]
+    edge_models = ModuleList([EdgeProcessor(in_dim_node, in_dim_edge, hidden_dim_edge, hidden_layers_edge, norm_type) for _ in range(num_edge_models)])
     node_model = NodeProcessor(in_dim_node, in_dim_edge * num_edge_models, hidden_dim_node, hidden_layers_node, norm_type)
 
     return MetaLayerMultigraph(
