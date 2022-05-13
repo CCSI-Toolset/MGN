@@ -61,7 +61,7 @@ class NodeProcessor(Module):
         norm_type: normalization type; one of 'LayerNorm', 'GraphNorm', 'InstanceNorm', 'BatchNorm', 'MessageNorm', or None
         '''
 
-        #super(NodeProcessor, self).__init__()
+        super(NodeProcessor, self).__init__()
         self.node_mlp = MLP(in_dim_node + in_dim_edge,  
             in_dim_node,
             hidden_dim,
@@ -119,7 +119,7 @@ class GraphProcessor(Module):
 
         '''
 
-        # super(GraphProcessor, self).__init__()
+        super(GraphProcessor, self).__init__()
 
         self.blocks = ModuleList()
         for _ in range(mp_iterations):
