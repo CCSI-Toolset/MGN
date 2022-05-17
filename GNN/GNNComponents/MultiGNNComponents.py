@@ -70,11 +70,11 @@ class NodeProcessor(Module):
 
     def forward(self, x, 
             edge_indices, edge_attrs,
-            u=None, batch=None):
+            u=None, batch=None, dim_size=None):
 
         out = [x]
         for ei, ea in zip(edge_indices, edge_attrs):
-            out.append(scatter_sum(ea, ei[1], dim=0))
+            out.append(scatter_sum(ea, ei[1], dim=0, dim_size=dim_size))
 
         out = cat(out, dim=-1)
         out = self.node_mlp(out)
