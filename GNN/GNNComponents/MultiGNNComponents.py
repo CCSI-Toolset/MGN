@@ -35,14 +35,14 @@ class MetaLayerMultigraph(Module):
     def forward(self, x, edge_indices,
             edge_attrs=None, 
             u=None,
-            batch=None):
+            batch=None, dim_size=None):
 
         if self.edge_models is not None:
             for i, (em, ei, ea) in enumerate(zip(self.edge_models, edge_indices, edge_attrs)):
                 edge_attrs[i] = em(x[ei[0]], x[ei[1]], ea, u, batch if batch is None else batch[row])
 
         if self.node_model is not None:
-            x = self.node_model(x, edge_indices, edge_attrs, u, batch)
+            x = self.node_model(x, edge_indices, edge_attrs, u, batch, dim_size=dim_size)
 
         return x, edge_attrs, u
 
@@ -130,9 +130,9 @@ class GraphProcessor(Module):
                 hidden_layers_node, hidden_layers_edge,
                 norm_type))
 
-    def forward(self, x, edge_indices, edge_attrs):
+    def forward(self, x, edge_indices, edge_attrs, dim_size=None):
         for block in self.blocks:
-            x, edge_attrs, _ = block(x, edge_indices, edge_attrs)
+            x, edge_attrs, _ = block(x, edge_indices, edge_attrs, dim_size)
 
         return x, edge_attrs
 
