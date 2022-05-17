@@ -132,7 +132,7 @@ class GraphProcessor(Module):
 
     def forward(self, x, edge_indices, edge_attrs, dim_size=None):
         for block in self.blocks:
-            x, edge_attrs, _ = block(x, edge_indices, edge_attrs, dim_size)
+            x, edge_attrs, _ = block(x, edge_indices, edge_attrs, dim_size=dim_size)
 
         return x, edge_attrs
 
