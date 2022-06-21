@@ -35,13 +35,13 @@ from GNN.utils.ExpLR import ExpLR
 # load config file
 def build_parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument("config_file", type=str, default='../configfiles/config_cylinderflow_np.ini',
+    parser.add_argument("config_file", type=str,
                         help="Config file to train model. See ../configfiles for examples")
     return parser
 
-# parser = build_parser()
-# args = parser.parse_args()
-m = ModelConfig('../configfiles/config_cylinderflow_np.ini')
+parser = build_parser()
+args = parser.parse_args()
+m = ModelConfig(args.config_file)
 
 
 #########
