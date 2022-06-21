@@ -41,7 +41,7 @@ def build_parser():
 
 # parser = build_parser()
 # args = parser.parse_args()
-m = ModelConfig('../configfiles/config_cylinderflow_np.ini')
+m = ModelConfig('../configfiles/config_cylinderflow_np.json')
 
 
 #########
@@ -79,10 +79,10 @@ if 'CUDA_VISIBLE_DEVICES' in os.environ:
     free_gpus = list(set(free_gpus).intersection(list(map(int, os.environ['CUDA_VISIBLE_DEVICES'].split(',')))))
 
 device = torch.device("cuda:" + str(free_gpus[0]) if torch.cuda.is_available() and len(free_gpus) > 0 else "cpu")
-if len(free_gpus) == 0 and device != 'cpu':
-    raise Exception('No free GPUs')
-use_parallel = m.get_use_parallel() and len(free_gpus) > 1 and device != 'cpu'
-
+# if len(free_gpus) == 0 and device != 'cpu':
+#     raise Exception('No free GPUs')
+# use_parallel = m.get_use_parallel() and len(free_gpus) > 1 and device != 'cpu'
+use_parallel = False
 if use_parallel:
     train_loader = DataListLoader(train_dataset, batch_size=batch_size, shuffle=True)
     test_loader = DataListLoader(test_dataset, batch_size=batch_size, shuffle=True)

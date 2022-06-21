@@ -2,7 +2,7 @@
     "DATA": {
       "class_name": "PNNLGraphDataset2",
       "name": "pnnl",
-      "data_dir": "/home/nguyen97/projects/ccsi/data/meshgraphnets-subset-2",
+      "data_dir": "data/meshgraphnets-subset-2",
       "train_dir": "${data_dir}/train",
       "test_dir": "${data_dir}/test",
       "graph_type": "delaunay",
