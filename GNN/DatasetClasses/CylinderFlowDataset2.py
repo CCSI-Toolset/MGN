@@ -84,7 +84,7 @@ def get_comsol_edges(node_coordinates, mesh_file = '/data/ccsi/cylinder_flow/mes
     mesh_elements = mesh_elements - 1 # comsol starts from 1 not 0.
 
     #match mesh and node coordinates
-    Y = cdist(mesh_nodes, node_coordinates)
+    Y = cdist(mesh_nodes, node_coordinates) # these coordinate are located at the mesh nodes
     index = np.argmin(Y, axis=1)
     simplex = index[mesh_elements]
     

@@ -31,17 +31,17 @@ from GNN.utils.utils import get_delta_minute
 from GNN.utils.ExpLR import ExpLR
 
 
-#########
-# load config file
-def build_parser():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("config_file", type=str,
-                        help="Config file to train model. See ../configfiles for examples")
-    return parser
+# #########
+# # load config file
+# def build_parser():
+#     parser = argparse.ArgumentParser()
+#     parser.add_argument("config_file", type=str,
+#                         help="Config file to train model. See ../configfiles for examples")
+#     return parser
 
-parser = build_parser()
-args = parser.parse_args()
-m = ModelConfig(args.config_file)
+# parser = build_parser()
+# args = parser.parse_args()
+m = ModelConfig('../configfiles/config_cylinderflow.ini')
 
 
 #########
@@ -74,13 +74,13 @@ model = MeshGraphNets(train_dataset.num_node_features, train_dataset.num_edge_fe
 #########
 # device settings
 batch_size = m.get_batch_size()
-free_gpus = get_free_gpus()
-if 'CUDA_VISIBLE_DEVICES' in os.environ:
-    free_gpus = list(set(free_gpus).intersection(list(map(int, os.environ['CUDA_VISIBLE_DEVICES'].split(',')))))
+free_gpus = [0] #$ get_free_gpus()
+# if 'CUDA_VISIBLE_DEVICES' in os.environ:
+#     free_gpus = list(set(free_gpus).intersection(list(map(int, os.environ['CUDA_VISIBLE_DEVICES'].split(',')))))
 
 device = torch.device("cuda:" + str(free_gpus[0]) if torch.cuda.is_available() and len(free_gpus) > 0 else "cpu")
-if len(free_gpus) == 0 and device != 'cpu':
-    raise Exception('No free GPUs')
+# if len(free_gpus) == 0 and device != 'cpu':
+#     raise Exception('No free GPUs')
 use_parallel = m.get_use_parallel() and len(free_gpus) > 1 and device != 'cpu'
 
 if use_parallel:
