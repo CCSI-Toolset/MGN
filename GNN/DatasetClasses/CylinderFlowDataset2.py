@@ -133,7 +133,7 @@ class CylinderFlowDataset2(Dataset):
         data = []
         for i in range(len(t)):
             data.append([vel_x[:,i],vel_y[:,i],p[:,i]])
-        data = np.array(data, dtype=np.float32)
+        data = np.array(data, dtype=np.float32) # data is (601,3,2520) 601 is the time, 2520 is number of points
         data = np.rollaxis(data,2,1)
 
         #normalize data;
