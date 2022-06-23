@@ -51,21 +51,36 @@ test_dataset = DS(**test_data_params)
 
 
 os.makedirs('results/actual',exist_ok=True)
-# Plot the actual results 
-for i in range(len(train_dataset)):
-    u = train_dataset[i].x[:,0]
-    v = train_dataset[i].x[:,1]
-    x = train_dataset[i].x[:,2]
-    y = train_dataset[i].x[:,3]
 
+for i in range(len(test_dataset)):
+    # Data to Predict 
+    u = test_dataset[i].x[:,0]
+    v = test_dataset[i].x[:,1]
+    x = test_dataset[i].x[:,2]
+    y = test_dataset[i].x[:,3]
+    vmag = np.sqrt(u*u + v*v)
+
+    # Use the model to predict data
+    # TODO: Write code to predict the what the data should be 
+
+
+
+    # TODO: Make 3 subplots 
+    # Plot the actual results 
     plt.figure(clear=True)
-    tri = Delaunay(train_dataset[i].x[:,2:4])
+    tri = Delaunay(test_dataset[i].x[:,2:4])
     triang  = mtri.Triangulation(x, y, tri.simplices)
-    cbar = plt.tricontourf(triang, u, cmap='rainbow')
+    cbar = plt.tricontourf(triang, vmag, cmap='rainbow')
     plt.triplot(x, y, tri.simplices,linewidth=0.2)    
     plt.plot(x, y, '.',markersize=0.2)
     cbar2 = plt.colorbar(cbar, location='bottom')
     plt.axis('equal')
-    plt.title('X-Velocity')
+    plt.title('Velocity Magnitude')
     plt.show()
     print('check')
+
+    # Plot the predicted results (Keep same scale as actual results)
+
+    # Plot the error 
+
+    
