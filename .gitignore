@@ -162,4 +162,5 @@ cython_debug/
 #.idea/
 *.pt
 *.0
-*.png
+*.gif
+*.bak

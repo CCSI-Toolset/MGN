@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 #   self.data (601,2520,3) 601 = time, 2520 = number of points, 3 = u,v,P
 # 
 #   Features: 8 (u,v, x, y, 0, 0, 0, 1), last 4 are node_type
-#       node_type = 1 - source This is [0 0 1 0] because of oneshot
-#       node_type = 2 - top, bottom, interior. This is [0 0 1 0] because of oneshot
+#       node_type = 1 - source This is [0 0 1 0] because of onehot
+#       node_type = 2 - top, bottom, interior. This is [0 0 1 0] because of onehot
 #       node_type = 3 - right/outlet 
 #       onehot num_classes = 3 which means [3] becomes [0 0 0 1]. [1] becomes [0 1 0 0]
 #           so [0, 0, 0, 1] is 3 (an outlet) see process_node_window
@@ -131,8 +131,8 @@ def CreatePlots():
     test_dataset,model = preprocess()
     model.eval()
     u_levels= np.linspace(-2.5,2.5,11) # color bar scale
-    v_levels= np.linspace(-1.5, 1.5,11) # color bar scale
-    p_levels= np.linspace(-1, 1,11) # color bar scale
+    v_levels= np.linspace(-3, 3,11) # color bar scale
+    p_levels= np.linspace(-3, 3,11) # color bar scale
     save_folder = 'results/actual'
     #########
     # Start the prediction
@@ -182,8 +182,8 @@ def CreatePlots():
         
         # Make 3 sets of subplots 
         # Plot the actual results U-Velocity
-        plt.figure(clear=True)
-        fig, ax = plt.subplots(nrows=3,ncols=3,figsize=(18, 8), dpi=120)
+        # fig = plt.figure(num=1,clear=True)
+        fig, ax = plt.subplots(nrows=3,ncols=3,figsize=(18, 8), dpi=120, num=1, clear=True)
         # plt.subplots_adjust(top = 0.5, bottom = 0, right = 0.2, left = 0, 
         #     hspace = 0, wspace = 0.5)
         triang  = mtri.Triangulation(x, y, tri.simplices)
@@ -252,11 +252,9 @@ def CreatePlots():
         ax[2,2].axis('scaled')
         ax[2,2].set_title('Elementwise Loss |p-p_actual|')
         plt.savefig(os.path.join(save_folder, f't={i:04d}'), bbox_inches = 'tight',pad_inches = 0)
-        
+        plt.clf()
+        plt.close('all')
 
-        # Plot the predicted results (Keep same scale as actual results)
-
-        # Plot the error 
 
 if __name__ =="__main__":
     CreatePlots()
