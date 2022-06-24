@@ -87,9 +87,16 @@ The example the author provided is cylinder flow. The [dataset class](https://gi
 # Architecture
 
 # Results
+
+To plot the results `cd` into `training_scripts` and run `python plot_results.py` [training_scripts/plot_results.py](https://github.com/pjuangph/MGN/blob/main/training_scripts/plot_results.py) 
+This will generate a bunch of images in a results folder. Run make_gif.sh to create a gif. You may have to install imagemagik and allow it to use all the memory. 
+
+Results Description: 
+- Row 1 - Actual results (Normalized)
+- Row 2 - Predicted Results (Normalized)
+- Row 3 - Error 
+
 [Results - really big gif](https://nasa-public-data.s3.amazonaws.com/plot3d_utilities/mesh_graph_nets_cylinder_flow-50.gif)
-
-
 
 # Release
 
