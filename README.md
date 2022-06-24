@@ -38,14 +38,14 @@ cd training_scripts
 bash train_mgn_config_cylinderflow_np.sh
 ```
 
-## Dataset 
+# Dataset 
 Dataset consists of two files: 
 ### Starting files
 #### [`/data/cylinder_flow_comsol.csv`](https://github.com/pjuangph/MGN/blob/main/data/cylinder_flow_comsol.csv) 
 Data in this file is structured as \[x, y, t (s), u (m/s), v (m/s), P (Pa)\] with `x` and `y` being the vertices of the elements of the mesh. 
 Notice that there's a time, this file contains 600 time samples of u,v,P at each vertex. 
 
-#### [`/data/mesh_comsol_output.txt`](https://github.com/pjuangph/MGN/blob/main/data/mesh_comsol_output.txt)
+### [`/data/mesh_comsol_output.txt`](https://github.com/pjuangph/MGN/blob/main/data/mesh_comsol_output.txt)
 This file contains the verticies and element to element connectivity. There are a total of **2520 vertices**.
 
 > % Coordinates (x, y
@@ -60,7 +60,7 @@ As you scroll down you get to this. The rows of this table correspond to the ele
 4         1         3         
 5         6         2     
 
-#### Graph Data Structure
+### Graph Data Structure
 Torch Geometric Graph Data requires the following:
 - x: Features describing each vertex. In this case (u,v, x, y, 0, 0, 0, 1)
   - u and v are the velocity in the x and y directions
@@ -74,24 +74,24 @@ Torch Geometric Graph Data requires the following:
 - pos: Position in x,y,z of each vertex
 - edge_connectivity: This is a matrix describing which vertices are connected to what. Uni-directional: \[1,2\] means 1 is sending information to 2. Bi-directional would look like \[\[1,2\], \[2,1\]\]. A mesh like the example is bi-directional.
 
-**edge_connectivity: Finding Element to Element connectivity**
+#### edge_connectivity: Finding Element to Element connectivity
 
 To find the element-to-element connectivity, The distance between each mesh_node and node_coordinate was calculated. The minimum value is used to reorder the mesh_elements. See [get_comsol_edges](https://github.com/pjuangph/MGN/blob/9b15befa36de19671161a1552d22c318bab10d8b/GNN/DatasetClasses/CylinderFlowDataset2.py#L52) 
 
 A given vertex can exchange information with it's connected neighbors.
 ![](doc_images/element_info_exchange.png)
 
-### Graph Data Structure
+## Graph Data Structure
 The example the author provided is cylinder flow. The [dataset class](https://github.com/pjuangph/MGN/blob/main/GNN/DatasetClasses/CylinderFlowDataset2.py) 
 
-## Architecture
+# Architecture
 
-## Results
+# Results
 [Results - really big gif](https://nasa-public-data.s3.amazonaws.com/plot3d_utilities/mesh_graph_nets_cylinder_flow-50.gif)
 
 
 
-## Release
+# Release
 
 LLNL release number: LLNL-CODE-829430
 
