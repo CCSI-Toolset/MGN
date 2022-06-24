@@ -36,6 +36,10 @@ Fu et al., 2020. "[Investigation of Countercurrent Flow Profile and Liquid Holdu
 ```
 cd training_scripts
 bash train_mgn_config_cylinderflow_np.sh
+
+or
+
+python train_mgn_config_cylinderflow_np.py
 ```
 
 # Dataset 
