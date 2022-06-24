@@ -86,6 +86,8 @@ The example the author provided is cylinder flow. The [dataset class](https://gi
 
 # Architecture
 
+## Training
+
 # Results
 
 To plot the results `cd` into `training_scripts` and run `python plot_results.py` [training_scripts/plot_results.py](https://github.com/pjuangph/MGN/blob/main/training_scripts/plot_results.py) 
