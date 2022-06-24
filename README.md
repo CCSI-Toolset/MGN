@@ -48,17 +48,17 @@ Notice that there's a time, this file contains 600 time samples of u,v,P at each
 #### [`/data/mesh_comsol_output.txt`](https://github.com/pjuangph/MGN/blob/main/data/mesh_comsol_output.txt)
 This file contains the verticies and element to element connectivity. There are a total of **2520 vertices**.
 
-> % Coordinates (x, y
-2.187223786996194        0.01511668485418859      
-2.181512605042017        0.008144843910914357     
-2.2                      0.00814484391091436      
-2.2                      0.01623985272861472     
+> % Coordinates (x, y)
+> 2.187223786996194        0.01511668485418859      
+> 2.181512605042017        0.008144843910914357     
+> 2.2                      0.00814484391091436      
+> 2.2                      0.01623985272861472     
 
 As you scroll down you get to this. The rows of this table correspond to the element index. The columns show which vertices (2520 total) belong in the element. 
 > % Elements (triangles), These are mesh_elements 
-1         2         3    <--- Row = each element
-4         1         3         
-5         6         2     
+> 1         2         3    <--- Row = each element
+> 4         1         3         
+> 5         6         2     
 
 ### Graph Data Structure
 Torch Geometric Graph Data requires the following:
