@@ -87,7 +87,7 @@ The example the author provided is cylinder flow. The [dataset class](https://gi
 # Architecture
 
 # Results
-[Results - really big gif](https://nasa-public-data.s3.amazonaws.com/plot3d_utilities/mesh_graph_nets_cylinder_flow-50.gif)
+[Results - really big gif](https://nasa-public-data.s3.amazonaws.com/plot3d_utilities/mesh_graph_nets_cylinder_flow-100.gif)
 
 
 
