@@ -45,7 +45,7 @@ Dataset consists of two files:
 Data in this file is structured as \[x, y, t (s), u (m/s), v (m/s), P (Pa)\] with `x` and `y` being the vertices of the elements of the mesh. 
 Notice that there's a time, this file contains 600 time samples of u,v,P at each vertex. 
 
-#### [`mesh_comsol_output.txt`](https://github.com/pjuangph/MGN/blob/main/data/mesh_comsol_output.txt)
+#### [`/data/mesh_comsol_output.txt`](https://github.com/pjuangph/MGN/blob/main/data/mesh_comsol_output.txt)
 This file contains the verticies and element to element connectivity. There are a total of **2520 vertices**.
 
 > % Coordinates (x, y
@@ -64,12 +64,15 @@ A given element can exchange information with it's neighbors so the first line o
 ![](doc_images/element_info_exchange.png)
 
 ### Graph Data Structure
-
+The example the author provided is cylinder flow. The [dataset class](https://github.com/pjuangph/MGN/blob/main/GNN/DatasetClasses/CylinderFlowDataset2.py) 
 
 ## Architecture
 
 ## Results
-![animation.gif](https://nasa-public-data.s3.amazonaws.com/plot3d_utilities/mesh_graph_nets_cylinder_flow-50.gif)
+
+
+<img src="https://nasa-public-data.s3.amazonaws.com/plot3d_utilities/mesh_graph_nets_cylinder_flow-50.gif">
+[Results.gif](https://nasa-public-data.s3.amazonaws.com/plot3d_utilities/mesh_graph_nets_cylinder_flow-50.gif)
 
 
 ## Release
