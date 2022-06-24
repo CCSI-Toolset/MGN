@@ -35,14 +35,14 @@ class MetaLayerMultigraph(Module):
     def forward(self, x, edge_indices,
             edge_attrs=None, 
             u=None,
-            batch=None):
+            batch=None, dim_size=None):
 
         if self.edge_models is not None:
             for i, (em, ei, ea) in enumerate(zip(self.edge_models, edge_indices, edge_attrs)):
                 edge_attrs[i] = em(x[ei[0]], x[ei[1]], ea, u, batch if batch is None else batch[row])
 
         if self.node_model is not None:
-            x = self.node_model(x, edge_indices, edge_attrs, u, batch)
+            x = self.node_model(x, edge_indices, edge_attrs, u, batch, dim_size=dim_size)
 
         return x, edge_attrs, u
 
@@ -61,7 +61,7 @@ class NodeProcessor(Module):
         norm_type: normalization type; one of 'LayerNorm', 'GraphNorm', 'InstanceNorm', 'BatchNorm', 'MessageNorm', or None
         '''
 
-        #super(NodeProcessor, self).__init__()
+        super(NodeProcessor, self).__init__()
         self.node_mlp = MLP(in_dim_node + in_dim_edge,  
             in_dim_node,
             hidden_dim,
@@ -70,11 +70,11 @@ class NodeProcessor(Module):
 
     def forward(self, x, 
             edge_indices, edge_attrs,
-            u=None, batch=None):
+            u=None, batch=None, dim_size=None):
 
         out = [x]
         for ei, ea in zip(edge_indices, edge_attrs):
-            out.append(scatter_sum(ea, ei[1], dim=0))
+            out.append(scatter_sum(ea, ei[1], dim=0, dim_size=dim_size))
 
         out = cat(out, dim=-1)
         out = self.node_mlp(out)
@@ -89,7 +89,7 @@ def build_graph_processor_block(
         hidden_layers_node=2, hidden_layers_edge=2,
         norm_type='LayerNorm'):
 
-    edge_models = [EdgeProcessor(in_dim_node, in_dim_edge, hidden_dim_edge, hidden_layers_edge, norm_type) for _ in range(num_edge_models)]
+    edge_models = ModuleList([EdgeProcessor(in_dim_node, in_dim_edge, hidden_dim_edge, hidden_layers_edge, norm_type) for _ in range(num_edge_models)])
     node_model = NodeProcessor(in_dim_node, in_dim_edge * num_edge_models, hidden_dim_node, hidden_layers_node, norm_type)
 
     return MetaLayerMultigraph(
@@ -103,7 +103,8 @@ class GraphProcessor(Module):
         num_edge_models=1,
         in_dim_node=128, in_dim_edge=128,
         hidden_dim_node=128, hidden_dim_edge=128, 
-        hidden_layers_node=2, hidden_layers_edge=2):
+        hidden_layers_node=2, hidden_layers_edge=2,
+                norm_type='LayerNorm'):
 
         '''
         Graph processor
@@ -119,7 +120,7 @@ class GraphProcessor(Module):
 
         '''
 
-        # super(GraphProcessor, self).__init__()
+        super(GraphProcessor, self).__init__()
 
         self.blocks = ModuleList()
         for _ in range(mp_iterations):
@@ -129,9 +130,9 @@ class GraphProcessor(Module):
                 hidden_layers_node, hidden_layers_edge,
                 norm_type))
 
-    def forward(self, x, edge_indices, edge_attrs):
+    def forward(self, x, edge_indices, edge_attrs, dim_size=None):
         for block in self.blocks:
-            x, edge_attrs, _ = block(x, edge_indices, edge_attrs)
+            x, edge_attrs, _ = block(x, edge_indices, edge_attrs, dim_size=dim_size)
 
         return x, edge_attrs
 
