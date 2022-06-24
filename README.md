@@ -100,6 +100,10 @@ The example the author provided is cylinder flow. The [dataset class](https://gi
 
 ## Training
 
+Going from this   ->  Predicting these
+\[x,y,u,v,0,1,0,0\] -> \[u,v,P\]
+u,v appear twice which is a bit strange. Future research could be to use u, v from previous time step to predict the future one (transient) or use inlet and outlet boundary conditions to predict the flowfield (steady state)
+
 # Results
 
 To plot the results `cd` into `training_scripts` and run `python plot_results.py` [training_scripts/plot_results.py](https://github.com/pjuangph/MGN/blob/main/training_scripts/plot_results.py) 
