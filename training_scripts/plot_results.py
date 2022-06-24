@@ -131,11 +131,13 @@ def preprocess():
 def CreatePlots():
     test_dataset,model = preprocess()
     model.eval()
-    levels= np.linspace(0,1.5,10) # color bar scale
-
+    u_levels= np.linspace(-1.5,1.5,11) # color bar scale
+    v_levels= np.linspace(-0.01, 0.01,11) # color bar scale
+    p_levels= np.linspace(-0.2, 0.2,11) # color bar scale
+    save_folder = 'results/actual'
     #########
     # Start the prediction
-    os.makedirs('results/actual',exist_ok=True)
+    os.makedirs(save_folder,exist_ok=True)
     loss_fn = torch.nn.MSELoss()
 
     for i in range(len(test_dataset)):
@@ -173,82 +175,84 @@ def CreatePlots():
         
         #############
         # Use the model to predict data
-        # TODO: Write code to predict the what the data should be 
         predicted = model(test_dataset[i])
         predicted = predicted.detach().numpy()
         u_loss = np.abs(predicted[:,0] - u)
         v_loss = np.abs(predicted[:,1] - v)
         p_loss = np.abs(predicted[:,2] - p)
-        print('check')
         
-        # TODO: Make 3 subplots 
+        # Make 3 sets of subplots 
         # Plot the actual results U-Velocity
-        fig, ax = plt.subplots(333,sharey=True)
+        plt.figure(clear=True)
+        fig, ax = plt.subplots(nrows=3,ncols=3,figsize=(18, 8), dpi=120)
+        # plt.subplots_adjust(top = 0.5, bottom = 0, right = 0.2, left = 0, 
+        #     hspace = 0, wspace = 0.5)
         triang  = mtri.Triangulation(x, y, tri.simplices)
         triang.set_mask(mask)
-        cbar = ax[0,0].tricontourf(triang, u, cmap='rainbow', levels=levels)        # Plot U
-        cbar2 = ax[0,0].colorbar(cbar, location='bottom')
-        ax[0,0].triplot(x, y, tri.simplices,linewidth=0.2)    
-        ax[0,0].plot(x, y, '.',markersize=0.2)
-        ax[0,0].set_axis('scaled')
-        ax[0,0].title('Normalized U - Velocity')
 
-        cbar = ax[1,0].tricontourf(triang, predicted[:,0], cmap='rainbow', levels=levels)
-        cbar2 = ax[1,0].colorbar(cbar, location='bottom')
-        ax[1,0].triplot(x, y, tri.simplices,linewidth=0.2)    
-        ax[1,0].plot(x, y, '.',markersize=0.2)
-        ax[1,0].set_axis('scaled')
-        ax[1,0].title('Normalized U - Velocity')
+        cbar = ax[0,0].tricontourf(triang, u, cmap='rainbow', levels=u_levels)        # Plot U
+        fig.colorbar(cbar, ax=ax[0,0], location='bottom', pad=0)
+        ax[0,0].triplot(x, y, tri.simplices,linewidth=0.1)    
+        ax[0,0].plot(x, y, '.',markersize=0.15)
+        ax[0,0].axis('scaled')
+        ax[0,0].set_title('Normalized U - Velocity')
 
-        cbar = ax[2,0].tricontourf(triang, u_loss, cmap='rainbow', levels=np.linspace(0,u_loss.max(),10))
-        cbar2 = ax[2,0].colorbar(cbar, location='bottom')
-        ax[2,0].triplot(x, y, tri.simplices,linewidth=0.2)    
-        ax[2,0].plot(x, y, '.',markersize=0.2)
-        ax[2,0].set_axis('scaled')
-        ax[2,0].title('Elementwise Loss |u-u_actual|')
+        cbar = ax[1,0].tricontourf(triang, predicted[:,0], cmap='rainbow', levels=u_levels)
+        fig.colorbar(cbar, ax=ax[1,0], location='bottom', pad=0)
+        ax[1,0].triplot(x, y, tri.simplices,linewidth=0.1)    
+        ax[1,0].plot(x, y, '.',markersize=0.15)
+        ax[1,0].axis('scaled')
+        ax[1,0].set_title('Normalized U - Velocity')
 
-        cbar = ax[0,1].tricontourf(triang, v, cmap='rainbow', levels=levels)        # Plot V
-        cbar2 = ax[0,1].colorbar(cbar, location='bottom')
-        ax[0,1].triplot(x, y, tri.simplices,linewidth=0.2)    
-        ax[0,1].plot(x, y, '.',markersize=0.2)
-        ax[0,1].set_axis('scaled')
-        ax[0,1].title('Normalized V - Velocity')
+        cbar = ax[2,0].tricontourf(triang, u_loss, cmap='rainbow', levels=np.linspace(0,u_loss.max(),11))
+        fig.colorbar(cbar, ax=ax[2,0], location='bottom', pad=0)
+        ax[2,0].triplot(x, y, tri.simplices,linewidth=0.1)    
+        ax[2,0].plot(x, y, '.',markersize=0.15)
+        ax[2,0].axis('scaled')
+        ax[2,0].set_title('Elementwise Loss |u-u_actual|')
 
-        cbar = ax[1,1].tricontourf(triang, predicted[:,1], cmap='rainbow', levels=levels)
-        cbar2 = ax[1,1].colorbar(cbar, location='bottom')
-        ax[1,1].triplot(x, y, tri.simplices,linewidth=0.2)    
-        ax[1,1].plot(x, y, '.',markersize=0.2)
-        ax[1,1].set_axis('scaled')
-        ax[1,1].title('Normalized V - Velocity')
+        cbar = ax[0,1].tricontourf(triang, v, cmap='rainbow', levels=v_levels)        # Plot V
+        fig.colorbar(cbar, ax=ax[0,1], location='bottom', pad=0)
+        ax[0,1].triplot(x, y, tri.simplices,linewidth=0.1)    
+        ax[0,1].plot(x, y, '.',markersize=0.15)
+        ax[0,1].axis('scaled')
+        ax[0,1].set_title('Normalized V - Velocity')
 
-        cbar = ax[2,1].tricontourf(triang, v_loss, cmap='rainbow', levels=np.linspace(0,v_loss.max(),10))
-        cbar2 = ax[2,1].colorbar(cbar, location='bottom')
-        ax[2,1].triplot(x, y, tri.simplices,linewidth=0.2)    
-        ax[2,1].plot(x, y, '.',markersize=0.2)
-        ax[2,1].set_axis('scaled')
-        ax[2,1].title('Elementwise Loss |v-v_actual|')
+        cbar = ax[1,1].tricontourf(triang, predicted[:,1], cmap='rainbow', levels=v_levels)
+        fig.colorbar(cbar, ax=ax[1,1], location='bottom', pad=0)
+        ax[1,1].triplot(x, y, tri.simplices,linewidth=0.1)    
+        ax[1,1].plot(x, y, '.',markersize=0.15)
+        ax[1,1].axis('scaled')
+        ax[1,1].set_title('Normalized V - Velocity')
 
-        cbar = ax[0,2].tricontourf(triang, v, cmap='rainbow', levels=levels)        # Plot P
-        cbar2 = ax[0,2].colorbar(cbar, location='bottom')
-        ax[0,2].triplot(x, y, tri.simplices,linewidth=0.2)    
-        ax[0,2].plot(x, y, '.',markersize=0.2)
-        ax[0,2].set_axis('scaled')
-        ax[0,2].title('Normalized P')
+        cbar = ax[2,1].tricontourf(triang, v_loss, cmap='rainbow', levels=np.linspace(0,v_loss.max(),11))
+        fig.colorbar(cbar, ax=ax[2,1], location='bottom', pad=0)
+        ax[2,1].triplot(x, y, tri.simplices,linewidth=0.1)    
+        ax[2,1].plot(x, y, '.',markersize=0.15)
+        ax[2,1].axis('scaled')
+        ax[2,1].set_title('Elementwise Loss |v-v_actual|')
 
-        cbar = ax[1,2].tricontourf(triang, predicted[:,1], cmap='rainbow', levels=levels)
-        cbar2 = ax[1,2].colorbar(cbar, location='bottom')
-        ax[1,2].triplot(x, y, tri.simplices,linewidth=0.2)    
-        ax[1,2].plot(x, y, '.',markersize=0.2)
-        ax[1,2].set_axis('scaled')
-        ax[1,2].title('Normalized P')
+        cbar = ax[0,2].tricontourf(triang, v, cmap='rainbow', levels=p_levels)        # Plot P
+        fig.colorbar(cbar, ax=ax[0,2], location='bottom', pad=0)
+        ax[0,2].triplot(x, y, tri.simplices,linewidth=0.1)
+        ax[0,2].plot(x, y, '.',markersize=0.15)
+        ax[0,2].axis('scaled')
+        ax[0,2].set_title('Normalized P')
 
-        cbar = ax[2,2].tricontourf(triang, p_loss, cmap='rainbow', levels=np.linspace(0,v_loss.max(),10))
-        cbar2 = ax[2,2].colorbar(cbar, location='bottom')
-        ax[2,2].triplot(x, y, tri.simplices,linewidth=0.2)    
-        ax[2,2].plot(x, y, '.',markersize=0.2)
-        ax[2,2].set_axis('scaled')
-        ax[2,2].title('Elementwise Loss |p-p_actual|')
-        plt.show()
+        cbar = ax[1,2].tricontourf(triang, predicted[:,1], cmap='rainbow', levels=p_levels)
+        fig.colorbar(cbar, ax=ax[1,2], location='bottom', pad=0)
+        ax[1,2].triplot(x, y, tri.simplices,linewidth=0.1)    
+        ax[1,2].plot(x, y, '.',markersize=0.15)
+        ax[1,2].axis('scaled')
+        ax[1,2].set_title('Normalized P')
+
+        cbar = ax[2,2].tricontourf(triang, p_loss, cmap='rainbow', levels=np.linspace(0,p_loss.max(),11))
+        fig.colorbar(cbar, ax=ax[2,2], location='bottom', pad=0)
+        ax[2,2].triplot(x, y, tri.simplices,linewidth=0.1)    
+        ax[2,2].plot(x, y, '.',markersize=0.15)
+        ax[2,2].axis('scaled')
+        ax[2,2].set_title('Elementwise Loss |p-p_actual|')
+        plt.savefig(os.path.join(save_folder, f't={i:04d}'), bbox_inches = 'tight',pad_inches = 0)
         
 
         # Plot the predicted results (Keep same scale as actual results)
