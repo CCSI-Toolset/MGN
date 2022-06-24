@@ -1,4 +1,3 @@
-import imp
 import matplotlib.pyplot as plt 
 
 
@@ -43,7 +42,7 @@ import matplotlib.pyplot as plt
 from torch_geometric.nn import DataParallel
 from torch_geometric.data import DataListLoader
 from torch_geometric.data import DataLoader
-
+from tqdm import trange
 
 def preprocess():
     # parser = build_parser()
@@ -131,16 +130,16 @@ def preprocess():
 def CreatePlots():
     test_dataset,model = preprocess()
     model.eval()
-    u_levels= np.linspace(-1.5,1.5,11) # color bar scale
-    v_levels= np.linspace(-0.01, 0.01,11) # color bar scale
-    p_levels= np.linspace(-0.2, 0.2,11) # color bar scale
+    u_levels= np.linspace(-2.5,2.5,11) # color bar scale
+    v_levels= np.linspace(-1.5, 1.5,11) # color bar scale
+    p_levels= np.linspace(-1, 1,11) # color bar scale
     save_folder = 'results/actual'
     #########
     # Start the prediction
     os.makedirs(save_folder,exist_ok=True)
     loss_fn = torch.nn.MSELoss()
 
-    for i in range(len(test_dataset)):
+    for i in trange(len(test_dataset)):
         ########
         # Data to Predict 
         u = test_dataset[i].x[:,0].numpy()
