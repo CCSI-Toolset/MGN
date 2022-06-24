@@ -79,7 +79,7 @@ Torch Geometric Graph Data requires the following:
 To find the element-to-element connectivity, The distance between each mesh_node and node_coordinate was calculated. The minimum value is used to reorder the mesh_elements. See [get_comsol_edges](https://github.com/pjuangph/MGN/blob/9b15befa36de19671161a1552d22c318bab10d8b/GNN/DatasetClasses/CylinderFlowDataset2.py#L52) 
 
 A given vertex can exchange information with it's connected neighbors.
-![](doc_images/element_info_exchange.png)
+![](doc_images/element_info_exchange.jpg)
 
 ## Graph Data Structure
 The example the author provided is cylinder flow. The [dataset class](https://github.com/pjuangph/MGN/blob/main/GNN/DatasetClasses/CylinderFlowDataset2.py) 
