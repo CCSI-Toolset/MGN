@@ -97,15 +97,17 @@ A given vertex can exchange information with it's connected neighbors.
 The example the author provided is cylinder flow. The [dataset class](https://github.com/pjuangph/MGN/blob/main/GNN/DatasetClasses/CylinderFlowDataset2.py) 
 
 # Architecture
+The design of the neural network consists of encoding the features and edges by passing it through a MLP (GNN/GNN.py). This data is then sent to the graph processor where it's combined and encoded by another MLP before the messages are aggregated and sent through the last MLP of the graph processor. The final MLP at the very right is used to output u, v, and P. 
 ![Architecture](doc_images/architecture.jpg)
 
 
 ## Training
+The inputs to the neural network consits of the following: 
 
-Going from this   ->  Predicting these
 \[x,y,u,v,0,1,0,0\] -> \[u,v,P\]
+Going from this   ->  Predicting these
 
-u,v appear twice which is a bit strange. Future research could be to use u, v from previous time step to predict the future one (transient) or use inlet and outlet boundary conditions to predict the flowfield (steady state)
+> Note: u,v appear twice which is a bit strange. Future research could be to use u, v from previous time step to predict the future one (transient) or use inlet and outlet boundary conditions to predict the flowfield (steady state)
 
 # Results
 
