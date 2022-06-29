@@ -97,6 +97,8 @@ A given vertex can exchange information with it's connected neighbors.
 The example the author provided is cylinder flow. The [dataset class](https://github.com/pjuangph/MGN/blob/main/GNN/DatasetClasses/CylinderFlowDataset2.py) 
 
 # Architecture
+![Architecture](doc_images/architecture.png)
+
 
 ## Training
 

@@ -133,7 +133,7 @@ def CreatePlots():
     u_levels= np.linspace(-2.5,2.5,11) # color bar scale
     v_levels= np.linspace(-3, 3,11) # color bar scale
     p_levels= np.linspace(-3, 3,11) # color bar scale
-    save_folder = 'results/actual'
+    save_folder = 'results'
     #########
     # Start the prediction
     os.makedirs(save_folder,exist_ok=True)
@@ -176,9 +176,9 @@ def CreatePlots():
         # Use the model to predict data
         predicted = model(test_dataset[i])
         predicted = predicted.detach().numpy()
-        u_loss = np.abs(predicted[:,0] - u)
-        v_loss = np.abs(predicted[:,1] - v)
-        p_loss = np.abs(predicted[:,2] - p)
+        u_loss = np.abs((predicted[:,0] - u)/u)
+        v_loss = np.abs((predicted[:,1] - v)/v)
+        p_loss = np.abs((predicted[:,2] - p)/p)
         
         # Make 3 sets of subplots 
         # Plot the actual results U-Velocity
@@ -208,7 +208,7 @@ def CreatePlots():
         ax[2,0].triplot(x, y, tri.simplices,linewidth=0.1)    
         ax[2,0].plot(x, y, '.',markersize=0.15)
         ax[2,0].axis('scaled')
-        ax[2,0].set_title('Elementwise Loss |u-u_actual|')
+        ax[2,0].set_title('$Loss |(u-u_{actual})/u_{actual}|$')
 
         cbar = ax[0,1].tricontourf(triang, v, cmap='rainbow', levels=v_levels)        # Plot V
         fig.colorbar(cbar, ax=ax[0,1], location='bottom', pad=0)
@@ -229,7 +229,7 @@ def CreatePlots():
         ax[2,1].triplot(x, y, tri.simplices,linewidth=0.1)    
         ax[2,1].plot(x, y, '.',markersize=0.15)
         ax[2,1].axis('scaled')
-        ax[2,1].set_title('Elementwise Loss |v-v_actual|')
+        ax[2,1].set_title('$Loss |(v-v_{actual})/v_{actual}|$')
 
         cbar = ax[0,2].tricontourf(triang, v, cmap='rainbow', levels=p_levels)        # Plot P
         fig.colorbar(cbar, ax=ax[0,2], location='bottom', pad=0)
@@ -250,7 +250,7 @@ def CreatePlots():
         ax[2,2].triplot(x, y, tri.simplices,linewidth=0.1)    
         ax[2,2].plot(x, y, '.',markersize=0.15)
         ax[2,2].axis('scaled')
-        ax[2,2].set_title('Elementwise Loss |p-p_actual|')
+        ax[2,2].set_title('$Loss |(p-p_{actual})/p_{actual}|$')
         plt.savefig(os.path.join(save_folder, f't={i:04d}'), bbox_inches = 'tight',pad_inches = 0)
         plt.clf()
         plt.close('all')
