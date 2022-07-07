@@ -18,7 +18,7 @@ Fu et al., 2020. "[Investigation of Countercurrent Flow Profile and Liquid Holdu
 
 # Other Contributors
 - Paht Juangphanich 
-  - Documentation, Plotting, Adaptation of datasets from [deepmind-research](https://github.com/deepmind/deepmind-research/tree/master/meshgraphnets)
+  - Documentation, Plotting 
 
 ## Requirements
     - matplotlib 
