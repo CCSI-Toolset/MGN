@@ -84,7 +84,7 @@ def get_comsol_edges(node_coordinates, mesh_file = '/data/ccsi/cylinder_flow/mes
     mesh_elements = mesh_elements - 1 # comsol starts from 1 not 0.
 
     #match mesh and node coordinates
-    Y = cdist(mesh_nodes, node_coordinates)
+    Y = cdist(mesh_nodes, node_coordinates) # these coordinate are located at the mesh nodes
     index = np.argmin(Y, axis=1)
     simplex = index[mesh_elements]
     
@@ -133,7 +133,7 @@ class CylinderFlowDataset2(Dataset):
         data = []
         for i in range(len(t)):
             data.append([vel_x[:,i],vel_y[:,i],p[:,i]])
-        data = np.array(data, dtype=np.float32)
+        data = np.array(data, dtype=np.float32) # data is (601,3,2520) 601 is the time, 2520 is number of points
         data = np.rollaxis(data,2,1)
 
         #normalize data;

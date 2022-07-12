@@ -108,7 +108,7 @@ class NodeProcessor(nn.Module):
         out = cat([x, out], dim=-1)
         out = self.node_mlp(out)
         out += x #residual connection
-
+    
         return out
 
 def build_graph_processor_block(in_dim_node=128, in_dim_edge=128,
