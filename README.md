@@ -30,11 +30,15 @@ We provide two main settings for rollouts:
   - For **SLURM** based systems (e.g. NERSC), see the `README.md` in `bash_scripts/rollouts/SLURM/` for more information.
   - For **LSF** based systems (e.g. LC's Lassen), see the `README.md` in `bash_scripts/rollouts/LSF/` for more information. 
 
-## Relevant Publications
+## Relevant Publications/Datasets
 
-[[2304.00338] Scientific Computing Algorithms to Learn Enhanced Scalable Surrogates for Mesh Physics (arxiv.org)](https://arxiv.org/abs/2304.00338)
+[[10.48550/arXiv.2304.00338] Scientific Computing Algorithms to Learn Enhanced Scalable Surrogates for Mesh Physics](https://arxiv.org/abs/2304.00338)
 
-[[2010.03409] Learning Mesh-Based Simulation with Graph Networks (arxiv.org)](https://arxiv.org/abs/2010.03409)
+[[10.1016/j.ces.2020.115693] Investigation of countercurrent flow profile and liquid holdup in random packed column with local CFD data](https://www.sciencedirect.com/science/article/pii/S0009250920302256)
+
+[[10.48550/arXiv.2010.03409] Learning Mesh-Based Simulation with Graph Networks](https://arxiv.org/abs/2010.03409)
+
+[[10.25584/1963908] Packed Column Simulations](https://data.pnnl.gov/group/nodes/dataset/33472)
 
 ## Requirements
 See [environment.yml](environment.yml).
