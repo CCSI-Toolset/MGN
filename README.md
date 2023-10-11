@@ -1,6 +1,21 @@
 # MeshGraphNets
 
-This code base contains PyTorch implementations of graph neural networks for CFD simulation surrogate development. The plan is to apply this code to predict volume fraction fields associated with CFD simulations of a representative column model (Fu et al., 2020) for solvent-based carbon capture within the CCSI2 project.
+This codebase contains PyTorch implementations of graph neural networks for CFD simulation surrogate development. The plan is to apply this code to predict volume fraction fields associated with CFD simulations of a representative column model (Fu et al., 2020) for solvent-based carbon capture within the CCSI2 project.
+
+## Environment Setup
+
+Due to the nature of certain libaries requiring its requisites to be pre-installed, we need to build the environment step-by-step (instead of just using a `environment.yml` file)
+
+```bash
+conda create --name ccsi_release python=3.10
+conda activate ccsi_release
+
+pip install torch==2.0.1+cu117 --extra-index-url https://download.pytorch.org/whl/cu117
+pip install torch_geometric==2.3.1
+pip install torch_scatter torch_cluster -f https://data.pyg.org/whl/torch-2.0.1+cu117.html
+conda install scipy pandas networkx matplotlib tensorboard
+pip install python-louvain
+```
 
 ## Training Models
 
