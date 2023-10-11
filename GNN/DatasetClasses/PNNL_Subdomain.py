@@ -572,7 +572,7 @@ class PNNL_Subdomain(MGNDataset):
         else:
             torch.save(node_type_onehot_dict, self.node_type_onehot_path)
 
-    # define __len__ and get for easier loading with DPP
+    # define __len__ and get for easier loading with DDP
     # to be used with DistributedSampler
     def __len__(self):
         # assumption: each processed path represents *one* graph
