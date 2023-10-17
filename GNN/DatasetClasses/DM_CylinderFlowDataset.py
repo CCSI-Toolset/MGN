@@ -441,6 +441,7 @@ class DM_CylinderFlowDataset(MGNDataset):
         node_types = torch.from_numpy(data_sample["node_type"][0, :, 0]).type(
             torch.LongTensor
         )
+        non_fluid_indices = torch.where(~torch.isin(node_types, self.source_node_types))[0]
         # get node coordinates and build graph
         node_coordinates = torch.from_numpy(data_sample["mesh_pos"][0]).float()
         num_nodes = node_coordinates.shape[0]
@@ -460,7 +461,8 @@ class DM_CylinderFlowDataset(MGNDataset):
                 subtype_graph = transforms(subtype_graph)
             elif graph_type in ["radius", "knn"]:
                 subtype_graph = add_edges_to_nodes(
-                    subtype_graph, num_nodes, graph_type, radius=self.radius, k=self.k
+                    subtype_graph, num_nodes, non_fluid_nodes,
+                    graph_type=graph_type, radius=self.radius, k=self.k
                 )
             else:
                 raise Exception("invalid graph type: %s" % graph_type)
