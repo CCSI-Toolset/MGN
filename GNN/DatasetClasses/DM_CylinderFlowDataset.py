@@ -461,7 +461,7 @@ class DM_CylinderFlowDataset(MGNDataset):
                 subtype_graph = transforms(subtype_graph)
             elif graph_type in ["radius", "knn"]:
                 subtype_graph = add_edges_to_nodes(
-                    subtype_graph, num_nodes, non_fluid_nodes,
+                    subtype_graph, num_nodes, non_fluid_indices,
                     graph_type=graph_type, radius=self.radius, k=self.k
                 )
             else:
