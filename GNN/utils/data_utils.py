@@ -244,7 +244,7 @@ def add_edges_to_nodes(
         if graph_type == "radius":
             # note: this construction may be slow due to a thresholding problem (see below)
             transforms.insert(
-                0, RadiusGraph(radius, max_num_neighbors=len(N_nodes))
+                0, RadiusGraph(radius, max_num_neighbors=N_nodes)
             )  # setting max_num_neighbors to num nodes guarantees undirected
         elif graph_type == "knn":
             transforms.insert(0, KNNGraph(k, force_undirected=True))
